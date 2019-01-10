@@ -1,0 +1,8 @@
+site_name: Coffey Notes
+
+nav:
+  - 首页: 'index.md'
+  - Symfony:
+    - '入门一': 'symfony/index.md'
+    - '最佳实践bundle': 'symfony/最佳实践bundle.md'
+theme: readthedocs
