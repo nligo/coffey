@@ -1,5 +1,5 @@
 site_name: Coffey Notes
-
+repo_url: https://github.com/nligo/coffey
 nav:
   - 首页: 'index.md'
   - Symfony:
