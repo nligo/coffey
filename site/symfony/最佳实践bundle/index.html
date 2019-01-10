@@ -1,0 +1,397 @@
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  
+  <link rel="shortcut icon" href="../../img/favicon.ico">
+  <title>最佳实践bundle - Coffey Notes</title>
+  <link href='https://fonts.googleapis.com/css?family=Lato:400,700|Roboto+Slab:400,700|Inconsolata:400,700' rel='stylesheet' type='text/css'>
+
+  <link rel="stylesheet" href="../../css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../../css/theme_extra.css" type="text/css" />
+  <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/github.min.css">
+  
+  <script>
+    // Current page data
+    var mkdocs_page_name = "\u6700\u4f73\u5b9e\u8df5bundle";
+    var mkdocs_page_input_path = "symfony/\u6700\u4f73\u5b9e\u8df5bundle.md";
+    var mkdocs_page_url = null;
+  </script>
+  
+  <script src="../../js/jquery-2.1.1.min.js" defer></script>
+  <script src="../../js/modernizr-2.8.3.min.js" defer></script>
+  <script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/highlight.min.js"></script>
+  <script>hljs.initHighlightingOnLoad();</script> 
+  
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side stickynav">
+      <div class="wy-side-nav-search">
+        <a href="../.." class="icon icon-home"> Coffey Notes</a>
+        <div role="search">
+  <form id ="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" title="Type search term here" />
+  </form>
+</div>
+      </div>
+
+      <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+	<ul class="current">
+	  
+          
+            <li class="toctree-l1">
+		
+    <a class="" href="../..">首页</a>
+	    </li>
+          
+            <li class="toctree-l1">
+		
+    <span class="caption-text">Symfony</span>
+    <ul class="subnav">
+                <li class="">
+                    
+    <a class="" href="../index.md">入门一</a>
+                </li>
+                <li class=" current">
+                    
+    <a class="current" href="./">最佳实践bundle</a>
+    <ul class="subnav">
+            
+    <li class="toctree-l3"><a href="#bundle">最佳实践bundle</a></li>
+    
+
+    <li class="toctree-l3"><a href="#_1">最佳实践可重用的包 一个¶</a></li>
+    
+        <ul>
+        
+            <li><a class="toctree-l4" href="#step-1-download-the-bundle">Step 1: Download the Bundle</a></li>
+        
+            <li><a class="toctree-l4" href="#step-2-enable-the-bundle">Step 2: Enable the Bundle</a></li>
+        
+        </ul>
+    
+
+    <li class="toctree-l3"><a href="#appconfigconfigyml">app/config/config.yml</a></li>
+    
+
+    </ul>
+                </li>
+    </ul>
+	    </li>
+          
+        </ul>
+      </div>
+      &nbsp;
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+        <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+        <a href="../..">Coffey Notes</a>
+      </nav>
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="breadcrumbs navigation">
+  <ul class="wy-breadcrumbs">
+    <li><a href="../..">Docs</a> &raquo;</li>
+    
+      
+        
+          <li>Symfony &raquo;</li>
+        
+      
+    
+    <li>最佳实践bundle</li>
+    <li class="wy-breadcrumbs-aside">
+      
+        <a href="https://github.com/nligo/coffey/edit/master/docs/symfony/最佳实践bundle.md"
+          class="icon icon-github"> Edit on GitHub</a>
+      
+    </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main">
+            <div class="section">
+              
+                <h1 id="bundle">最佳实践bundle</h1>
+<h1 id="_1">最佳实践可重用的包 一个¶</h1>
+<p>有两种类型的包:
+特定于应用程序的包:只用于构建应用程序;
+可重用的包:在许多项目之间共享。
+你的这篇文章是关于如何结构 可重复使用的包 这 他们容易配置和扩展。 许多这些建议不 适用于应用程序包,因为你要保持这些一样简单 越好。 对于应用程序包,跟着在显示的实践 这本书和食谱。
+讨论了特定于应用程序的包的最佳实践 Symfony框架的最佳实践 。
+包的名字 一个¶
+包也是一个PHP名称空间。 名称空间必须遵守 PSR-0 或 PSR-4 互操作性标准PHP名称空间和类名:它开始 供应商段,其次是零个或多个类别细分,它结束 名称空间的短名称,必须结束 包 后缀。
+一个名称空间变成一个包当你添加一个包类。 的 包类名称必须遵循这些简单的规则:
+只使用字母数字字符和下划线;
+使用一个CamelCased名称;
+使用描述性和短名称(不超过两个词);
+前缀的名称与连接供应商(和可选的 类别名称空间);
+后缀的名字 包 。
+这里有一些有效的包命名空间和类名:
+名称空间    包类名
+Acme \包\ BlogBundle AcmeBlogBundle
+Acme \ BlogBundle   AcmeBlogBundle
+按照惯例, getName() 包类的方法应该返回 类名。
+请注意
+如果你公开分享你的包,你必须使用包类名 库的名称( AcmeBlogBundle 而不是 BlogBundle 例如)。
+请注意
+Symfony核心包不包类前缀 Symfony 而且总是添加一个 包 sub-namespace;例如: FrameworkBundle 。
+每个包都有一个别名,它是小写字母的简短版的包 名称使用下划线( acme_blog 为 AcmeBlogBundle )。 这个别名 项目中用于执行独特性和定义包的 配置选项(见下面的一些用法示例)。
+目录结构 一个¶
+一个AcmeBlogBundle必须阅读的基本目录结构如下:
+ 1
+ 2
+ 3
+ 4
+ 5
+ 6
+ 7
+ 8
+ 9
+10
+11
+12
+13
+<your-bundle>/
+├─ AcmeBlogBundle.php
+├─ Controller/
+├─ README.md
+├─ LICENSE
+├─ Resources/
+│   ├─ config/
+│   ├─ doc/
+│   │  └─ index.rst
+│   ├─ translations/
+│   ├─ views/
+│   └─ public/
+└─ Tests/
+以下文件是强制性的 公约,因为他们确保结构 自动化工具可以依靠:
+AcmeBlogBundle.php :这是转换一个普通的类目录 成一个Symfony包(改变这个包的名字);
+README.md :此文件包含包和它的基本描述 通常显示了一些基本的例子,其完整的文档(它的链接 可以使用任何标记的格式在GitHub的支持下,如 README.rst );
+许可证 :使用的许可证代码的完整内容。 大多数第三方 包在MIT许可下发布的,但是你可以 选择任何许可 ;
+资源/ doc / index.rst :包的根文件文档。
+子目录的深度应该保持为最常用的最小 类和文件(两级最大值)。
+包目录是只读的。 如果你需要写临时文件,存储 他们下 缓存/ 或 日志/ 主机应用程序的目录。 工具 可以生成包中的文件目录结构,但只有在生成的吗 文件将存储库的一部分。
+下面的类和文件有特定的阵地:
+类型  目录
+命令  命令/
+控制器 控制器/
+服务容器扩展  DependencyInjection /
+事件监听器   EventListener /
+模型类[1]  模型/
+配置  资源/ config /
+Web资源(CSS、JS、图片)    资源/公共/
+翻译文件    资源/翻译/
+模板  资源/视图/
+单元测试和功能测试   测试/
+[1]看到 如何提供几个原则实现的模型类 如何处理 映射与编译器通过。
+类 一个¶
+包目录结构作为名称空间的层次结构。 为 实例, ContentController 控制器存储在 Acme / BlogBundle /控制器/ ContentController.php 和完全合格 类名称是 Acme \ BlogBundle \ \ ContentController控制器 。
+所有类和文件必须遵守 Symfony的编码标准 。
+一些类应被视为立面,应该尽可能短,喜欢 命令,帮手,监听器和控制器。
+类连接到事件分配器应该后缀为 侦听器 。
+应该存储在一个异常类 异常 sub-namespace。
+供应商 一个¶
+一捆不能嵌入第三方PHP库。 它应该依赖 标准Symfony半自动的。
+一捆不应该嵌入JavaScript编写的第三方库,CSS或 任何其他语言。
+测试 一个¶
+一捆应该写一个测试套件PHPUnit)和存储 的 测试/ 目录中。 测试应该遵循以下原则:
+测试套件必须与一个简单的可执行文件 phpunit) 命令从 一个示例应用程序;
+功能测试应该只被用来测试响应输出和 如果你有一些分析信息;
+测试应该覆盖至少95%的代码库。
+请注意
+一个测试套件必须不包含 AllTests.php 脚本,但必须依靠 的存在 phpunit.xml.dist 文件。
+文档 一个¶
+所有的类和函数必须有完整的PHPDoc。
+丰富的文档也应该提供的 reStructuredText 下格式, 的 资源/ doc / 目录; 资源/ doc / index.rst 文件是 唯一强制性的文件,必须文档的入口点。
+安装说明 一个¶
+为了减轻第三方的安装包,考虑使用 标准化后在你的指令 README.md 文件。
+减价
+ 1
+ 2
+ 3
+ 4
+ 5
+ 6
+ 7
+ 8
+ 9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22
+23
+24
+25
+26
+27
+28
+29
+30
+31
+32
+33
+34
+35
+36
+37
+38
+39
+40
+41
+42
+43
+44
+Installation
+============</p>
+<h2 id="step-1-download-the-bundle">Step 1: Download the Bundle</h2>
+<p>Open a command console, enter your project directory and execute the
+following command to download the latest stable version of this bundle:</p>
+<pre><code class="bash">$ composer require &lt;package-name&gt; &quot;~1&quot;
+</code></pre>
+
+<p>This command requires you to have Composer installed globally, as explained
+in the <a href="https://getcomposer.org/doc/00-intro.md">installation chapter</a>
+of the Composer documentation.</p>
+<h2 id="step-2-enable-the-bundle">Step 2: Enable the Bundle</h2>
+<p>Then, enable the bundle by adding it to the list of registered bundles
+in the <code>app/AppKernel.php</code> file of your project:</p>
+<pre><code class="php">&lt;?php
+// app/AppKernel.php
+
+// ...
+class AppKernel extends Kernel
+{
+    public function registerBundles()
+    {
+        $bundles = array(
+            // ...
+
+            new &lt;vendor&gt;\&lt;bundle-name&gt;\&lt;bundle-long-name&gt;(),
+        );
+
+        // ...
+    }
+
+    // ...
+}
+</code></pre>
+
+<p>reStructuredText
+上面的示例假设您正在安装的最新稳定版本 包,你不需要提供包的版本号 (如。 作曲家需要friendsofsymfony / user-bundle )。 如果安装 指令是指一些过去的bundle版本或不稳定的版本, 包括版本约束(如。 作曲家需要friendsofsymfony / user-bundle“~ 2.0 @dev” )。
+可选地,您可以添加更多的安装步骤( 步骤3 , 步骤4 等等) 解释其他必要的安装任务,如线路或登记 倾销资产。
+路由 一个¶
+如果包提供的路线,他们必须以包为前缀的别名。 例如,如果您的包叫AcmeBlogBundle,必须所有的路线 前缀与 acme_blog_ 。
+模板 一个¶
+如果一个包提供了模板,他们必须使用树枝。 一捆不能提供 一个主要布局,除非它提供了一个完整的应用程序。
+翻译文件 一个¶
+如果一个包提供消息翻译,他们在XLIFF必须定义 格式;域应该包命名的名称( acme_blog )。
+一捆不能覆盖现有的消息来自另一个包。
+配置 一个¶
+提供更大的灵活性,一个包可以提供可配置的设置 使用Symfony的内置机制。
+对于简单的配置设置,依赖于默认 参数 条目的 Symfony的配置。 简单的键/值对,Symfony参数 价值是任何有效的PHP价值。 每个参数的名字应该开始 包别名,虽然这只是一个最佳实践建议。 其余的 参数名称将使用一段时间( 。 )独立的不同部分(如。 acme_blog.author.email )。
+最终用户可以提供值在任何配置文件:
+YAML
+1
+2
+3</p>
+<h1 id="appconfigconfigyml">app/config/config.yml</h1>
+<p>parameters:
+    acme_blog.author.email: 'fabien@example.com'
+XML
+PHP
+从容器中检索代码中配置参数:
+$container-&gt;getParameter('acme_blog.author.email');
+即使这种机制很简单,你应该考虑使用更多 先进的 语义包配置 。
+版本控制 一个¶
+包必须后版本 语义版本控制标准 。
+服务 一个¶
+如果包定义了服务,他们必须以包为前缀的别名。 例如,AcmeBlogBundle服务必须前缀 acme_blog 。
+此外,服务不是直接使用的应用程序,应该 是 定义为私有 。
+你可以了解更多关于服务加载包读这篇文章: 如何加载服务配置在一个包吗 。
+作曲家的元数据 一个¶
+的 composer.json 元数据文件至少应包括下列:
+的名字
+由供应商和短包的名字。 如果你释放 包在自己的,而不是代表一个公司,使用你的个人名字 (如。 /那blog-bundle )。 包短名称不包括供应商 名称和区分每个单词字符。 例如: AcmeBlogBundle 转换成 blog-bundle 和 AcmeSocialConnectBundle 是 转换成 social-connect-bundle 。
+描述
+包的目的的简要说明。
+类型
+使用 symfony-bundle 价值。
+许可证
+麻省理工学院 Symfony的首选协议包,但是您可以使用任何 其他的许可证。
+自动装载
+这些信息使用Symfony加载的类的包。 的 PSR-4 自动装载标准是现代包推荐,但是 PSR-0 还支持标准。
+为了使开发人员更容易找到你的包,注册它 Packagist ,作曲家的官方库包。
+学习更多的食谱 一个¶
+如何加载服务配置在一个包吗</p>
+              
+            </div>
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+      
+        <a href="../.." class="btn btn-neutral" title="首页"><span class="icon icon-circle-arrow-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <!-- Copyright etc -->
+    
+  </div>
+
+  Built with <a href="http://www.mkdocs.org">MkDocs</a> using a <a href="https://github.com/snide/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>.
+</footer>
+      
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+
+  <div class="rst-versions" role="note" style="cursor: pointer">
+    <span class="rst-current-version" data-toggle="rst-current-version">
+      
+          <a href="https://github.com/nligo/coffey/" class="fa fa-github" style="float: left; color: #fcfcfc"> GitHub</a>
+      
+      
+        <span><a href="../.." style="color: #fcfcfc;">&laquo; Previous</a></span>
+      
+      
+    </span>
+</div>
+    <script>var base_url = '../..';</script>
+    <script src="../../js/theme.js" defer></script>
+      <script src="../../search/main.js" defer></script>
+
+</body>
+</html>
